@@ -9,13 +9,16 @@ function DialogEs(content,obj) {
             content = obj.content;
         }
         this.id = 'dialog' + new Date().getTime();
-        this.width = obj.width || 80;
-        this.height = obj.height || 20;
-        this.unit = obj.unit || '%';
-        this.confirm = '确定';
-        this.cancel = '取消';
+        this.width = obj.width || 5;
+        this.height = obj.height || 2;
+        this.unit = obj.unit || 'rem';
+        this.okTxt = obj.okTxt || '确定';
+        this.cancelTxt = obj.cancelTxt || '取消';
         this.title = obj.title|| '';
-        this.content = content;
+        this.content = content || '';
+        this.ok = obj.ok || function () {};
+        this.cancel = obj.cancel || function () {};
+        this.cancelShow = obj.cancelShow;
 
         this.maskStyle = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 100; background-color: hsla(0,0%,0%,.3);';
         this.style = 'position: absolute; left: 50%; top: 50%; background-color: #f1f5f7;';
@@ -30,6 +33,11 @@ function DialogEs(content,obj) {
 
     }
     DialogEs.prototype.render = function () {
+        var cancelHtmlString = '';
+        if(this.cancelShow){
+            cancelHtmlString = '<a class="btn-cancel" onclick="(('+ this.cancel +')())" href="javascript:;">'+this.cancelTxt+'</a>';
+        }
+
         var htmlConstructor = '' +
             '<div id="'+ this.id +'" class="dialog-especial-mask" style="'+ this.maskStyle +'">\
                 <div class="dialog-especial" style="'+ this.style +'">\
@@ -40,19 +48,31 @@ function DialogEs(content,obj) {
                         '+ this.content +'\
                     </div>\
                     <div class="dialog-especial-ft" style="'+ this.ftStyle +'">\
-                        <a class="btn-confirm" onClick="('+ this.hide +'());" href="javascript:;">'+this.confirm+'</a>\
+                        <a class="btn-confirm" onclick="(('+ this.ok +')())" href="javascript:;">'+this.okTxt+'</a>\
+                        '+ cancelHtmlString +'\
                     </div>\
                 </div>\
             </div>';
 
         $('body').append(htmlConstructor).on('click',function (e) {
-            if($(e.target).hasClass('btn-confirm')){
-                console.log(11);
+            var $target = $(e.target);
+            if($target.hasClass('btn-confirm') || $target.hasClass('btn-cancel')){
+                $target.parents('.dialog-especial-mask').hide();
             }
         });
     };
 
     DialogEs.prototype.hide = function () {
-        console.log(this.id);
         $('#'+ this.id).hide();
     };
+
+
+    var dialog1 = new DialogEs('用户名密码错误！',{
+        ok:function () {
+            console.log('我是确定')
+        },
+        cancel:function () {
+            console.log('我是取消')
+        },
+        cancelShow: true
+    });
