@@ -1,3 +1,8 @@
+//projectName: dialogEs
+//author: sunHaiTao
+//version: 2017-04-15 ver1.0
+//github: https://github.com/idealsea/DialogEs
+
 //Dialog有两个参数，第二个参数可选，第一个参数是提示框内容。
 //默认对话框没有取消按钮，在第二个参数里把对象的cancelShow属性设置成true就可以显示。
 //第二个参数示例
