@@ -17,5 +17,36 @@ var option = {
     cancelShow: false //是否显示取消按钮
 };
 var dialog1 = new DialogEs('用户名密码错误！', option);
+//定制弹窗
+var dialogContent = ''+
+        '<i class="icon-boshimao"></i>';
+    dialogContent +=
+        '<ul class="dialog-order-list">\
+            <li>\
+                <span>标题</span>\
+                <span class="order-price">¥59.00</span>\
+                <span class="btn-order app-detail-buy">订购</span>\
+            </li>\
+            <li>\
+                <span>标题</span>\
+                <span class="order-price">¥49.00</span>\
+                <span class="btn-order app-detail-buy">订购</span>\
+            </li>\
+            <li>\
+                <span>标题</span>\
+                <span class="order-price">¥99.00</span>\
+                <span class="btn-order app-detail-buy">订购</span>\
+            </li>\
+        </ul>';
+
+var dialog2 = new DialogEs('',{
+    width: '6.3',
+    height: '4.6',
+    unit: 'rem',
+    title: '订购',
+    content: dialogContent,
+    bdStyle: 'text-align:left;',
+    okTxt: '关闭'
+});
 ```
 我有个另外的想法，通过style += 改变样式。 目前没有实施是因为更新dom元素，比对代码没有想到办法。
