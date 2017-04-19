@@ -65,10 +65,10 @@ function DialogEs(content,obj) {
 DialogEs.prototype.render = function () {
     var cancelHtmlString = '', okHtmlString = '';
     if(this.cancelShow){
-        cancelHtmlString = '<a class="btn-cancel" onclick="(('+ this.cancel +')())" href="javascript:;">'+this.cancelTxt+'</a>';
+        cancelHtmlString = '<a class="btn-cancel" onclick=\'('+ this.cancel +')()\' href="javascript:;">'+this.cancelTxt+'</a>';
     }
     if(!this.okHide){
-        okHtmlString = '<a class="btn-confirm" onclick="(('+ this.ok +')())" href="javascript:;">'+this.okTxt+'</a>';
+        okHtmlString = '<a class="btn-confirm" onclick=\'('+ this.ok +')()\' href="javascript:;">'+this.okTxt+'</a>';
     }
 
     var htmlConstructor = '' +
