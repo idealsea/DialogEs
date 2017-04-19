@@ -91,6 +91,8 @@ DialogEs.prototype.render = function () {
         var $target = $(e.target);
         if($target.hasClass('btn-confirm') || $target.hasClass('btn-cancel')){
             $target.parents('.dialog-especial-mask').hide();
+        }else if($target.hasClass('dialog-especial-mask')){
+            $target.hide();
         }
     });
 };
