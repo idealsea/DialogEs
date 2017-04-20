@@ -29,7 +29,7 @@ function DialogEs(content,obj) {
     }
     this.id = 'dialog' + new Date().getTime();
     this.width = obj.width || 5;
-    this.height = obj.height || 2;
+    this.height = obj.height || 2.5;
     this.unit = obj.unit || 'rem';
     this.okTxt = obj.okTxt || '确定';
     this.cancelTxt = obj.cancelTxt || '取消';
@@ -45,7 +45,7 @@ function DialogEs(content,obj) {
     this.style += 'width:'+ this.width+this.unit +'; height:'+ this.height+this.unit +'; margin-left:'+ -(this.width/2)+this.unit + '; margin-top:'+ -(this.height/2)+this.unit+'; ';
     this.hdStyle = 'text-align:center; padding: .15rem; font-size:.4rem; ';
     this.ftStyle = 'display: flex; justify-content: space-around; ';
-    this.bdStyle = 'text-align:center; ';
+    this.bdStyle = 'text-align:center; font-size:.32rem; ';
     if(obj.style){
         this.style += obj.style;
     }
