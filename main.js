@@ -1,12 +1,14 @@
 //projectName: dialogEs
 //author: sunHaiTao
 //version: 2017-04-15 ver1.0
-//github: https://github.com/idealsea/DialogEs
 
-//Dialog有两个参数，第二个参数可选，第一个参数是提示框内容。
-//默认对话框没有取消按钮，在第二个参数里把对象的cancelShow属性设置成true就可以显示。
-//第二个参数示例
+//默认弹窗
+//var dialog1 = new DialogEs('用户名密码错误！');
+//带参数弹窗
 //    var option = {
+//        width: '',
+//        height: '',
+//        unit: '',
 //        ok:function () {
 //            console.log('我是确定')
 //        },
@@ -15,7 +17,7 @@
 //        },
 //        cancelShow: false //是否显示取消按钮
 //    };
-//    var dialog1 = new DialogEs('用户名密码错误！');
+//    var dialog1 = new DialogEs('用户名密码错误！', option);
 
 function DialogEs(content,obj) {
     if(obj === null || typeof obj !== 'object'){
@@ -39,6 +41,7 @@ function DialogEs(content,obj) {
     this.cancel = obj.cancel || function () {};
     this.cancelShow = obj.cancelShow;
     this.okHide = obj.okHide;
+    this.maskStyle = obj.hide;
 
     this.maskStyle = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 100; background-color: hsla(0,0%,0%,.3); ';
     this.style = 'position: absolute; left: 50%; top: 50%; background-color: #f1f5f7; ';
@@ -57,6 +60,9 @@ function DialogEs(content,obj) {
     }
     if(obj.ftStyle){
         this.ftStyle += obj.ftStyle;
+    }
+    if(obj.maskStyle){
+        this.maskStyle += obj.maskStyle;
     }
 
     this.render();
@@ -105,4 +111,8 @@ DialogEs.prototype.show = function () {
 };
 DialogEs.prototype.destroy = function () {
     $('#'+ this.id).remove();
+};
+DialogEs.prototype.alert = function (x) {
+    $('#'+ this.id).find('.dialog-especial-bd').text(x);
+    this.show();
 };
