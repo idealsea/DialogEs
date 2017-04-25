@@ -31,7 +31,7 @@ function DialogEs(content,obj) {
     }
     this.id = 'dialog' + new Date().getTime();
     this.width = obj.width || 5;
-    this.height = obj.height || 2.5;
+    this.height = obj.height || 'auto';
     this.unit = obj.unit || 'rem';
     this.okTxt = obj.okTxt || '确定';
     this.cancelTxt = obj.cancelTxt || '取消';
@@ -43,11 +43,20 @@ function DialogEs(content,obj) {
     this.okHide = obj.okHide;
     this.maskStyle = obj.hide;
 
+    var finalHeight,finalMarginTop;
+    if(!parseInt(this.height)){
+        finalHeight = 'auto';
+        finalMarginTop = '-25%';
+    }else{
+        finalHeight = this.height+this.unit;
+        finalMarginTop = -(this.height/2)+this.unit;
+    }
+
     this.maskStyle = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 100; background-color: hsla(0,0%,0%,.3); ';
     this.style = 'position: absolute; left: 50%; top: 50%; background-color: #f1f5f7; ';
-    this.style += 'width:'+ this.width+this.unit +'; height:'+ this.height+this.unit +'; margin-left:'+ -(this.width/2)+this.unit + '; margin-top:'+ -(this.height/2)+this.unit+'; ';
+    this.style += 'width:'+ this.width+this.unit +'; height:'+ finalHeight +'; margin-left:'+ -(this.width/2)+this.unit + '; margin-top:'+ finalMarginTop +'; ';
     this.hdStyle = 'text-align:center; padding: .15rem; font-size:.4rem; ';
-    this.ftStyle = 'display: flex; justify-content: space-around; ';
+    this.ftStyle = 'display: flex; justify-content: space-around; padding:.15rem 0 .25rem; ';
     this.bdStyle = 'text-align:center; font-size:.32rem; ';
     if(obj.style){
         this.style += obj.style;
@@ -100,6 +109,11 @@ DialogEs.prototype.render = function () {
         }else if($target.hasClass('dialog-especial-mask')){
             $target.hide();
         }
+    });
+    //update margin height
+    var $dialogEspecial = $('#'+ this.id).find('.dialog-especial');
+    $dialogEspecial.css({
+        'margin-top': -($dialogEspecial.height()/2)
     });
 };
 
