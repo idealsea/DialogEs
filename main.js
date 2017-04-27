@@ -1,6 +1,7 @@
 //projectName: dialogEs
 //author: sunHaiTao
-//version: 2017-04-15 ver1.0
+//version: 2017-04-27 ver1.1
+//github: https://github.com/idealsea/DialogEs
 
 //默认弹窗
 //var dialog1 = new DialogEs('用户名密码错误！');
@@ -47,16 +48,18 @@ function DialogEs(content,obj) {
     if(!parseInt(this.height)){
         finalHeight = 'auto';
         finalMarginTop = '-25%';
+        console.log(11);
     }else{
         finalHeight = this.height+this.unit;
         finalMarginTop = -(this.height/2)+this.unit;
+        console.log(finalMarginTop);
     }
 
     this.maskStyle = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 100; background-color: hsla(0,0%,0%,.3); ';
     this.style = 'position: absolute; left: 50%; top: 50%; background-color: #f1f5f7; ';
     this.style += 'width:'+ this.width+this.unit +'; height:'+ finalHeight +'; margin-left:'+ -(this.width/2)+this.unit + '; margin-top:'+ finalMarginTop +'; ';
     this.hdStyle = 'text-align:center; padding: .15rem; font-size:.4rem; ';
-    this.ftStyle = 'display: flex; justify-content: space-around; padding:.15rem 0 .25rem; ';
+    this.ftStyle = 'display: flex; justify-content: space-around; display: -webkit-flex; -webkit-justify-content: space-around; padding:.15rem 0 .25rem; ';
     this.bdStyle = 'text-align:center; font-size:.32rem; ';
     if(obj.style){
         this.style += obj.style;
@@ -111,10 +114,9 @@ DialogEs.prototype.render = function () {
         }
     });
     //update margin height
-    var $dialogEspecial = $('#'+ this.id).find('.dialog-especial');
-    $dialogEspecial.css({
-        'margin-top': -($dialogEspecial.height()/2)
-    });
+    if(!parseInt(this.height)){
+        this.amendPosition();
+    }
 };
 
 DialogEs.prototype.hide = function () {
@@ -129,4 +131,10 @@ DialogEs.prototype.destroy = function () {
 DialogEs.prototype.alert = function (x) {
     $('#'+ this.id).find('.dialog-especial-bd').text(x);
     this.show();
+};
+DialogEs.prototype.amendPosition = function () {
+    var $dialogEspecial = $('#'+ this.id).find('.dialog-especial');
+    $dialogEspecial.css({
+        'margin-top': -($dialogEspecial.height()/2)
+    });
 };
