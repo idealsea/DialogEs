@@ -48,9 +48,11 @@ function DialogEs(content,obj) {
     if(!parseInt(this.height)){
         finalHeight = 'auto';
         finalMarginTop = '-25%';
+        console.log(11);
     }else{
         finalHeight = this.height+this.unit;
         finalMarginTop = -(this.height/2)+this.unit;
+        console.log(finalMarginTop);
     }
 
     this.maskStyle = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 100; background-color: hsla(0,0%,0%,.3); ';
@@ -129,6 +131,7 @@ DialogEs.prototype.destroy = function () {
 DialogEs.prototype.alert = function (x) {
     $('#'+ this.id).find('.dialog-especial-bd').text(x);
     this.show();
+    this.amendPosition();
 };
 DialogEs.prototype.amendPosition = function () {
     var $dialogEspecial = $('#'+ this.id).find('.dialog-especial');
