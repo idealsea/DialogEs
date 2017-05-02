@@ -42,7 +42,6 @@ function DialogEs(content,obj) {
     this.cancel = obj.cancel || function () {};
     this.cancelShow = obj.cancelShow;
     this.okHide = obj.okHide;
-    this.maskStyle = obj.hide;
 
     var finalHeight,finalMarginTop;
     if(!parseInt(this.height)){
