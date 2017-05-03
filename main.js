@@ -121,6 +121,7 @@ DialogEs.prototype.hide = function () {
 };
 DialogEs.prototype.show = function () {
     $('#'+ this.id).show();
+    this.amendPosition();
 };
 DialogEs.prototype.destroy = function () {
     $('#'+ this.id).remove();
@@ -128,7 +129,6 @@ DialogEs.prototype.destroy = function () {
 DialogEs.prototype.alert = function (x) {
     $('#'+ this.id).find('.dialog-especial-bd').text(x);
     this.show();
-    this.amendPosition();
 };
 DialogEs.prototype.amendPosition = function () {
     var $dialogEspecial = $('#'+ this.id).find('.dialog-especial');
