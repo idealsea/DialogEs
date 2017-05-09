@@ -42,6 +42,7 @@ function DialogEs(content,obj) {
     this.cancel = obj.cancel || function () {};
     this.cancelShow = obj.cancelShow;
     this.okHide = obj.okHide;
+    this.maskOffClick = obj.maskOffClick || false;
 
     var finalHeight,finalMarginTop;
     if(!parseInt(this.height)){
@@ -58,6 +59,7 @@ function DialogEs(content,obj) {
     this.hdStyle = 'text-align:center; padding: .15rem; font-size:.4rem; ';
     this.ftStyle = 'display: flex; justify-content: space-around; display: -webkit-flex; -webkit-justify-content: space-around; padding:.15rem 0 .25rem; ';
     this.bdStyle = 'text-align:center; font-size:.32rem; ';
+    this.btnStyle = '';
     if(obj.style){
         this.style += obj.style;
     }
@@ -73,6 +75,9 @@ function DialogEs(content,obj) {
     if(obj.maskStyle){
         this.maskStyle += obj.maskStyle;
     }
+    if(obj.btnStyle){
+        this.btnStyle += obj.btnStyle;
+    }
 
     this.render();
 
@@ -83,7 +88,7 @@ DialogEs.prototype.render = function () {
         cancelHtmlString = '<a class="btn-cancel" onclick=\'('+ this.cancel +')()\' href="javascript:;">'+this.cancelTxt+'</a>';
     }
     if(!this.okHide){
-        okHtmlString = '<a class="btn-confirm" onclick=\'('+ this.ok +')()\' href="javascript:;">'+this.okTxt+'</a>';
+        okHtmlString = '<a class="btn-confirm" style="'+ this.btnStyle +'" onclick=\'('+ this.ok +')()\' href="javascript:;">'+this.okTxt+'</a>';
     }
 
     var htmlConstructor = '' +
@@ -102,11 +107,12 @@ DialogEs.prototype.render = function () {
                 </div>\
             </div>';
 
+    var _this = this;
     $('body').append(htmlConstructor).on('click',function (e) {
         var $target = $(e.target);
         if($target.hasClass('btn-confirm') || $target.hasClass('btn-cancel')){
             $target.parents('.dialog-especial-mask').hide();
-        }else if($target.hasClass('dialog-especial-mask')){
+        }else if($target.hasClass('dialog-especial-mask') && !_this.maskOffClick){
             $target.hide();
         }
     });
