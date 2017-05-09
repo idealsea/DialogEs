@@ -1,7 +1,6 @@
 //projectName: dialogEs
 //author: sunHaiTao
 //version: 2017-04-27 ver1.1
-//github: https://github.com/idealsea/DialogEs
 
 //默认弹窗
 //var dialog1 = new DialogEs('用户名密码错误！');
@@ -30,7 +29,7 @@ function DialogEs(content,obj) {
     if(typeof obj.content !== 'undefined'){
         content = obj.content;
     }
-    this.id = 'dialog' + new Date().getTime();
+    this.id = 'dialog' + new Date().getTime() + Math.ceil(Math.random()*35);
     this.width = obj.width || 5;
     this.height = obj.height || 'auto';
     this.unit = obj.unit || 'rem';
@@ -83,16 +82,19 @@ function DialogEs(content,obj) {
 
 }
 DialogEs.prototype.render = function () {
-    var cancelHtmlString = '', okHtmlString = '';
+    var cancelHtmlString = '', okHtmlString = '',maskHtmlString = '';
     if(this.cancelShow){
         cancelHtmlString = '<a class="btn-cancel" onclick=\'('+ this.cancel +')()\' href="javascript:;">'+this.cancelTxt+'</a>';
     }
     if(!this.okHide){
         okHtmlString = '<a class="btn-confirm" style="'+ this.btnStyle +'" onclick=\'('+ this.ok +')()\' href="javascript:;">'+this.okTxt+'</a>';
     }
+    if(this.maskOffClick){
+        maskHtmlString = ' mask-off-click';
+    }
 
     var htmlConstructor = '' +
-        '<div id="'+ this.id +'" class="dialog-especial-mask" style="'+ this.maskStyle +'">\
+        '<div id="'+ this.id +'" class="dialog-especial-mask '+ maskHtmlString +'" style="'+ this.maskStyle +'">\
                 <div class="dialog-especial" style="'+ this.style +'">\
                     <div class="dialog-especial-hd" style="'+ this.hdStyle +'">\
                         '+ this.title +'\
@@ -107,12 +109,11 @@ DialogEs.prototype.render = function () {
                 </div>\
             </div>';
 
-    var _this = this;
     $('body').append(htmlConstructor).on('click',function (e) {
         var $target = $(e.target);
         if($target.hasClass('btn-confirm') || $target.hasClass('btn-cancel')){
             $target.parents('.dialog-especial-mask').hide();
-        }else if($target.hasClass('dialog-especial-mask') && !_this.maskOffClick){
+        }else if($target.hasClass('dialog-especial-mask') && !$target.hasClass('mask-off-click')){
             $target.hide();
         }
     });
