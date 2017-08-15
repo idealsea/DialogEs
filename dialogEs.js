@@ -42,6 +42,7 @@ function DialogEs(content,obj) {
     this.cancelShow = obj.cancelShow;
     this.okHide = obj.okHide;
     this.maskOffClick = obj.maskOffClick || false;
+    this.parent = obj.parent || 'body';
 
     var finalHeight,finalMarginTop;
     if(!parseInt(this.height)){
@@ -56,7 +57,7 @@ function DialogEs(content,obj) {
     this.style = 'position: absolute; left: 50%; top: 50%; background-color: #f1f5f7; ';
     this.style += 'width:'+ this.width+this.unit +'; height:'+ finalHeight +'; margin-left:'+ -(this.width/2)+this.unit + '; margin-top:'+ finalMarginTop +'; ';
     this.hdStyle = 'text-align:center; padding: .15rem; font-size:.4rem; ';
-    this.ftStyle = 'display: flex; justify-content: space-around; display: -webkit-flex; -webkit-justify-content: space-around; padding:.15rem 0 .25rem; ';
+    this.ftStyle = 'text-align:center; padding:.15rem 0 .25rem; ';
     this.bdStyle = 'text-align:center; font-size:.32rem; ';
     this.btnStyle = '';
     if(obj.style){
@@ -77,12 +78,14 @@ function DialogEs(content,obj) {
     if(obj.btnStyle){
         this.btnStyle += obj.btnStyle;
     }
-
+    if(obj.parent){
+        this.maskStyle += 'position: absolute; ';
+    }
     this.render();
 
 }
 DialogEs.prototype.render = function () {
-    var cancelHtmlString = '', okHtmlString = '',maskHtmlString = '';
+    var cancelHtmlString = '', okHtmlString = '',maskOffClickClassName = '';
     if(this.cancelShow){
         cancelHtmlString = '<a class="btn-cancel" onclick=\'('+ this.cancel +')()\' href="javascript:;">'+this.cancelTxt+'</a>';
     }
@@ -90,11 +93,11 @@ DialogEs.prototype.render = function () {
         okHtmlString = '<a class="btn-confirm" style="'+ this.btnStyle +'" onclick=\'('+ this.ok +')()\' href="javascript:;">'+this.okTxt+'</a>';
     }
     if(this.maskOffClick){
-        maskHtmlString = ' mask-off-click';
+        maskOffClickClassName = ' mask-off-click';
     }
 
     var htmlConstructor = '' +
-        '<div id="'+ this.id +'" class="dialog-especial-mask '+ maskHtmlString +'" style="'+ this.maskStyle +'">\
+        '<div id="'+ this.id +'" class="dialog-especial-mask '+ maskOffClickClassName +'" style="'+ this.maskStyle +'">\
                 <div class="dialog-especial" style="'+ this.style +'">\
                     <div class="dialog-especial-hd" style="'+ this.hdStyle +'">\
                         '+ this.title +'\
@@ -109,7 +112,7 @@ DialogEs.prototype.render = function () {
                 </div>\
             </div>';
 
-    $('body').append(htmlConstructor).on('click',function (e) {
+    $(this.parent).append(htmlConstructor).on('click',function (e) {
         var $target = $(e.target);
         if($target.hasClass('btn-confirm') || $target.hasClass('btn-cancel')){
             $target.parents('.dialog-especial-mask').hide();
