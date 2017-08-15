@@ -59,7 +59,7 @@ function DialogEs(content,obj) {
     this.hdStyle = 'text-align:center; padding: .15rem; font-size:.4rem; ';
     this.ftStyle = 'text-align:center; padding:.15rem 0 .25rem; ';
     this.bdStyle = 'text-align:center; font-size:.32rem; ';
-    this.btnStyle = '';
+    this.okStyle = '';
     if(obj.style){
         this.style += obj.style;
     }
@@ -75,8 +75,8 @@ function DialogEs(content,obj) {
     if(obj.maskStyle){
         this.maskStyle += obj.maskStyle;
     }
-    if(obj.btnStyle){
-        this.btnStyle += obj.btnStyle;
+    if(obj.okStyle){
+        this.okStyle += obj.okStyle;
     }
     if(obj.parent){
         this.maskStyle += 'position: absolute; ';
@@ -90,7 +90,7 @@ DialogEs.prototype.render = function () {
         cancelHtmlString = '<a class="btn-cancel" onclick=\'('+ this.cancel +')()\' href="javascript:;">'+this.cancelTxt+'</a>';
     }
     if(!this.okHide){
-        okHtmlString = '<a class="btn-confirm" style="'+ this.btnStyle +'" onclick=\'('+ this.ok +')()\' href="javascript:;">'+this.okTxt+'</a>';
+        okHtmlString = '<a class="btn-confirm" style="'+ this.okStyle +'" onclick=\'('+ this.ok +')()\' href="javascript:;">'+this.okTxt+'</a>';
     }
     if(this.maskOffClick){
         maskOffClickClassName = ' mask-off-click';
